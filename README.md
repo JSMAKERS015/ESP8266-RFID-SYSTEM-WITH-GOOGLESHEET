@@ -265,13 +265,11 @@ function stripQuotes(value) {
 }
 ```
 
-
 5. Deploy as a Web App: Save and deploy the script to generate a unique URL (webhook) that ESP8266 will use to send data.
 6. Modify ESP8266 Code: We will update our ESP8266 code to send card details to the webhook URL whenever an RFID card is scanned.
+
    
-![g](https://github.com/user-attachments/assets/e0622c5e-8a7c-474a-86d4-3c7706d2e7a0)
-
-
+# **FINAL STEP**
 
 To program the Esp8266, upload the "RAW_CODE.ino" file, which will handle drawing and communication with the computer. Use the Arduino IDE to compile and upload the code. Make sure the esp8266 is connected to the computer during this process.
 
@@ -597,6 +595,7 @@ return;
 }
 
 ```
+The final output will exhibit the student information in a well-organized format on a Google Sheet upon scanning the card. This presentation will include comprehensive details such as the student's full name, student ID, enrolled courses, and contact information. The data will be structured in a manner that facilitates easy access and analysis, ensuring an efficient retrieval process for administrative purposes.
 
 
-   
+![g](https://github.com/user-attachments/assets/aac665a2-a0f6-4f4e-b1f6-aef963147d40)
