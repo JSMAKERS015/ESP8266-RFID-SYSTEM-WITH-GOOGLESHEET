@@ -7,16 +7,16 @@ The connection of the Arduino to the display is relatively straightforward, and 
 
 |ESP8266|LCD|RFID|BUZZER|
 |---|---|---|---|
-|3V3 |VCC|3.3V|
-|GND |GND|GND |GND    |
-|D1	|SCL|    |
-|D2	|SDA|    |
-|D3 |---|RST |
-|D4 |---|SDA |
-|D5 |---|SCK |
-|D6 |---|MISO|
-|D7 |---|MOSI|
-|D8 |---|----|POSITIVE|
+|3V3|VCC|3.3V|
+|GND|GND|GND |GND|
+|D1|SCL|---|
+|D2|SDA|---|
+|D3|---|RST|
+|D4|---|SDA|
+|D5|---|SCK|
+|D6|---|MISO|
+|D7|---|MOSI|
+|D8|---|----|POSITIVE|
 
 This configuration creates the wiring shown in the following figure.
 ![CIRCUIT DIAGRAM](https://github.com/user-attachments/assets/7592d805-8a67-4d91-80bd-768e5a552107)
