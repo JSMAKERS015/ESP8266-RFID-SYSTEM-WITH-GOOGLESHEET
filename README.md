@@ -1,4 +1,4 @@
-# **ESP8266 RFID SYSTEM WITH GOOGLESHEET**
+# **ESP8266 RFID🪪 SYSTEM⚙️ WITH GOOGLE🌎 SHEET📑**
 
 ![SMART RFID ATTENDANCE SYSTEM_20250327_160748_0000](https://github.com/user-attachments/assets/b385da70-ffcd-4996-a271-0f8e9e001ec4)
 
@@ -30,11 +30,254 @@ To program the Esp8266, upload the "RAW_CODE.ino" file, which will handle drawin
 ![Screenshot 2025-03-28 143240](https://github.com/user-attachments/assets/072874c1-46fe-451d-809a-9b69ecf15e89)
 
 
-### **Uploading the Code**
 
-1.  Go to **Tools > Board > esp8266 > NodeMCU 1.0(ESP-12E Module)**. 
-2.  "Copy this code and paste it into your IDE."
-3.  Please compile the code, upload it, and take pleasure in the successful execution of your work.
+## **STEPS**
+First, we will write data on the RFID card using an ESP8266 and the MFRC522 RFID module. When a card is detected, the system retrieves its Unique Identifier (UID) and displays it on the Serial Monitor. After identifying the card, the program proceeds to write predefined data—"13-JASPREET SINGH"—onto a specific memory block of the RFID card. Once the data is successfully written, the system immediately reads it back from the card to verify that the operation was successful. The retrieved data is then displayed on the Serial Monitor. Finally, the system halts communication with the RFID card and stops encryption, allowing the next card to be scanned. This process is useful for applications such as access control, user authentication, and data storage on RFID cards. 🚀
+
+# ** 📂 Step-by-Step Guide to Upload the Code **
+
+### **Step 1: Install Arduino IDE (if not installed)
+Download and install Arduino IDE from:
+🔗( https://www.arduino.cc/en/software)
+
+### **Step 2: Install ESP8266 Board in Arduino IDE
+1. Open Arduino IDE.
+2. Go to File → Preferences.
+3. In the Additional Board Manager URLs field, enter:
+```
+http://arduino.esp8266.com/stable/package_esp8266com_index.json
+```
+4. Click OK.
+5. Go to Tools → Board → Boards Manager.
+6. Search for ESP8266 and install the latest version.
+   
+### **Step 3: Install Required Libraries
+Go to Sketch → Include Library → Manage Libraries, then install the following:
+1. MFRC522 [by GithubCommunity](https://github.com/miguelbalboa/rfid.git)
+2. SPI (built-in with Arduino IDE)
+   
+### **Step 4: Select the Correct Board and Port
+1. Connect your ESP8266 board via USB.
+2. Go to Tools → Board → Select your ESP8266 board (NodeMCU 1.0 or Wemos D1 R1).
+3. Set Upload Speed to 115200.
+4. Select the correct COM Port under Tools → Port.
+
+### **Step 5: Copy and Paste the Code
+1. Open Arduino IDE.
+2. Create a new sketch (File → New).
+3. Copy and paste the RFID code.
+```
+#include <SPI.h>
+#include <MFRC522.h>
+
+constexpr uint8_t RST_PIN = D3;  // 🔄 Reset pin for RFID
+constexpr uint8_t SS_PIN = D4;   // 🛠 Slave Select pin for RFID
+
+MFRC522 mfrc522(SS_PIN, RST_PIN);  // 📡 Create MFRC522 instance
+MFRC522::MIFARE_Key key;           // 🔐 Key for authentication
+
+int blockNum = 4;  // 💾 Block to store data (16 bytes max)
+
+byte readBlockData[18];  // 📥 Buffer for reading data (18 bytes needed)
+byte bufferLen = 18;
+MFRC522::StatusCode status;  // 🚦 Status code for RFID operations
+
+// ✍️ Function to write data to RFID card
+void WriteDataToBlock(int blockNum, String data) {
+byte blockData[16];  
+memset(blockData, 0, sizeof(blockData));  // 🧹 Clear the buffer
+data.getBytes(blockData, 16);  // 🔣 Convert string to byte array
+
+// 🔐 Authenticate before writing
+status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, blockNum, &key, &(mfrc522.uid));
+if (status != MFRC522::STATUS_OK) {
+Serial.print("❌ Authentication failed (Write): ");
+Serial.println(mfrc522.GetStatusCodeName(status));
+return;
+}
+
+// 💾 Write data to block
+status = mfrc522.MIFARE_Write(blockNum, blockData, 16);
+if (status != MFRC522::STATUS_OK) {
+Serial.print("❌ Writing failed: ");
+Serial.println(mfrc522.GetStatusCodeName(status));
+return;
+}
+    
+Serial.println("✅ Data written successfully!");
+}
+
+// 📖 Function to read data from RFID card
+void ReadDataFromBlock(int blockNum) {
+// 🔐 Authenticate before reading
+status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, blockNum, &key, &(mfrc522.uid));
+if (status != MFRC522::STATUS_OK) {
+Serial.print("❌ Authentication failed (Read) on block ");
+Serial.print(blockNum);
+Serial.print(": ");
+Serial.println(mfrc522.GetStatusCodeName(status));
+return;
+}
+
+// 📥 Read data from block
+status = mfrc522.MIFARE_Read(blockNum, readBlockData, &bufferLen);
+if (status != MFRC522::STATUS_OK) {
+Serial.print("❌ Reading failed on block ");
+Serial.print(blockNum);
+Serial.print(": ");
+Serial.println(mfrc522.GetStatusCodeName(status));
+return;
+}
+
+// 🔣 Convert bytes to string and clean up the data
+String cardData = String((char*)readBlockData);
+cardData.trim();
+
+Serial.print("📄 Card Data: ");
+Serial.println(cardData);
+}
+
+// 🚀 Setup function
+void setup() {
+Serial.begin(115200);
+SPI.begin();          // 🛠 Initialize SPI communication
+mfrc522.PCD_Init();   // 🚀 Initialize RFID reader
+Serial.println("🔄 Ready to scan RFID Tag...");
+
+// 🔐 Set default authentication key (0xFF for most cards)
+for (byte i = 0; i < 6; i++) {
+key.keyByte[i] = 0xFF;
+}
+}
+
+// 🔄 Main loop function
+void loop() {
+
+// 🚫 Return if no card is present or failed to read
+if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
+return;
+}
+
+Serial.println("\n🎴 **Card Detected**");
+
+// 🔑 Display Card UID
+Serial.print(F("🔹 UID: "));
+for (byte i = 0; i < mfrc522.uid.size; i++) {
+Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
+Serial.print(mfrc522.uid.uidByte[i], HEX);
+}
+Serial.println();
+
+// 📌 Display Card Type
+Serial.print(F("🔸 Type: "));
+Serial.println(mfrc522.PICC_GetTypeName(mfrc522.PICC_GetType(mfrc522.uid.sak)));
+
+// ✍️ Write data to card
+Serial.println("📝 Writing data to card...");
+WriteDataToBlock(blockNum, "13-JASPREET SINGH");  // Example data
+
+// 📖 Read data back from card
+Serial.println("📖 Reading data from card...");
+ReadDataFromBlock(blockNum);
+
+mfrc522.PICC_HaltA();    // ✋ Halt card
+mfrc522.PCD_StopCrypto1();  // 🛑 Stop encryption
+delay(2000);  // ⏱ Wait for 2 seconds before next loop
+}
+```
+
+### **Uploading the Code**
+1. Click the Verify (✔) Button to check for errors.
+2. Click the Upload (→) Button to upload the code.
+3.Wait for "Done Uploading" message.
+
+### **Step 7: Open Serial Monitor
+1. Go to Tools → Serial Monitor.
+2. Set baud rate to 115200.
+3. You should see messages like:
+```
+🔄 Ready to scan RFID Tag...
+🎴 **Card Detected**
+🔹 UID: XX XX XX XX
+🔸 Type: MIFARE 1K
+📝 Writing data to card...
+✅ Data written successfully!
+📖 Reading data from card...
+📄 Card Data: 13-JASPREET SINGH
+```
+
+![Capture](https://github.com/user-attachments/assets/e40fda3a-55b3-4cd7-b585-2ca6a501a5bb)
+
+
+✅ Testing the System
+1. Place an RFID tag/card near the RC522 reader.
+2. The Serial Monitor should display the UID and Card Type.
+3. The predefined data ("13-JASPREET SINGH") will be written to the card.
+4. The data will then be read back and displayed on the Serial Monitor.
+
+
+# **NEXT STEP..
+Next, we will integrate Google Sheets to store the scanned RFID data in a cloud-based spreadsheet. This allows real-time logging of card scans, making it useful for applications like attendance systems, access control, and inventory tracking.
+To achieve this, we will use Google Apps Script and a web-based interface to send data from the ESP8266 to Google Sheets via an HTTP request. The ESP8266 will send the UID and stored card data to a Google Apps Script endpoint, which will append the received information to a Google Sheet.
+
+### **Steps to Set Up Google Sheets Integration:**
+1. Create a New Google Sheet: Open Google Sheets and create a new spreadsheet. Name it RFID Logs.
+2. Set Up Columns: In the first row, label the columns as Timestamp, Card UID, and Data to store scan details.
+3. Open Google Apps Script: Click Extensions > Apps Script and remove the default code.
+4. Insert a Google Apps Script Code: We will write a script to accept incoming HTTP requests from the ESP8266 and append the data to our spreadsheet.Copy this code and paste into your script.
+
+   
+```
+var ss = SpreadsheetApp.openById('1IudQRvWafJE7iarJkApN6ZI6KuFzmf9Me0cQbuoCDow'); // Google Sheet ID
+var sheet = ss.getSheetByName('Sheet1');
+var timezone = "Asia/Kolkata"; // Set your timezone
+
+function doGet(e) {
+  Logger.log(JSON.stringify(e));
+
+  if (!e.parameter.name || !e.parameter.roll || !e.parameter.status) {
+    return ContentService.createTextOutput("Error: Missing 'name', 'roll', or 'status' parameter")
+                         .setMimeType(ContentService.MimeType.TEXT);
+  }
+
+  var Curr_Date = new Date();
+  var Curr_Time = Utilities.formatDate(Curr_Date, "Asia/Kolkata", 'HH:mm:ss');
+  var name = stripQuotes(e.parameter.name);
+  var roll = stripQuotes(e.parameter.roll);
+  var status = stripQuotes(e.parameter.status);  // Now using status from URL
+
+  // Store Data in Google Sheets
+  var ss = SpreadsheetApp.openById('1IudQRvWafJE7iarJkApN6ZI6KuFzmf9Me0cQbuoCDow'); // Google Sheet ID
+  var sheet = ss.getSheetByName('Sheet1');
+  var nextRow = sheet.getLastRow() + 1;
+  sheet.getRange("A" + nextRow).setValue(roll);
+  sheet.getRange("B" + nextRow).setValue(name);
+  sheet.getRange("C" + nextRow).setValue(Utilities.formatDate(Curr_Date, "Asia/Kolkata", 'yyyy-MM-dd'));
+  sheet.getRange("D" + nextRow).setValue(Curr_Time);
+  sheet.getRange("E" + nextRow).setValue(status); // Now using status from the URL
+
+  // Send Response to ESP8266
+  return ContentService.createTextOutput("Roll: " + roll + ", " + name + " marked as " + status)
+                       .setMimeType(ContentService.MimeType.TEXT);
+}
+
+// ✅ Add the missing stripQuotes function
+function stripQuotes(value) {
+  return value.toString().replace(/^["']|['"]$/g, ""); // Removes surrounding quotes
+}
+```
+
+
+5. Deploy as a Web App: Save and deploy the script to generate a unique URL (webhook) that ESP8266 will use to send data.
+6. Modify ESP8266 Code: We will update our ESP8266 code to send card details to the webhook URL whenever an RFID card is scanned.
+   
+![g](https://github.com/user-attachments/assets/e0622c5e-8a7c-474a-86d4-3c7706d2e7a0)
+
+
+
+## ** MAIN CODE**
+
+   
 ```
 /* 🎓 JS MAKERS
 *  - Github- https://github.com/JSMAKERS015/ESP8266-RFID-SYSTEM-WITH-GOOGLESHEET.git
