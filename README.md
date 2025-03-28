@@ -22,7 +22,8 @@ The connection of the ESP8266 to the display is relatively straightforward, and 
 |D7|---|MOSI|
 |D8|---|----|POSITIVE|
 
-This configuration creates the wiring shown in the following figure.
+###This configuration creates the wiring shown in the following figure.
+
 ![CIRCUIT DIAGRAM](https://github.com/user-attachments/assets/7592d805-8a67-4d91-80bd-768e5a552107)
 
 To program the Esp8266, upload the "RAW_CODE.ino" file, which will handle drawing and communication with the computer. Use the Arduino IDE to compile and upload the code. Make sure the esp8266 is connected to the computer during this process.
