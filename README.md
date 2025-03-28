@@ -3,7 +3,10 @@
 ![SMART RFID ATTENDANCE SYSTEM_20250327_160748_0000](https://github.com/user-attachments/assets/b385da70-ffcd-4996-a271-0f8e9e001ec4)
 
 
+
+
 ## **CONNECTIONS:**
+
 The connection of the ESP8266 to the display is relatively straightforward, and it is crucial to emphasize that the display operates on a 5V power supply. Make sure RFID cnnections shouls be correct...
 
 |ESP8266|LCD|RFID|BUZZER|
