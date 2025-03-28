@@ -37,11 +37,11 @@ First, we will write data on the RFID card using an ESP8266 and the MFRC522 RFID
 
 # ** 📂 Step-by-Step Guide to Upload the Code **
 
-### **Step 1: Install Arduino IDE (if not installed)
+### Step 1: Install Arduino IDE (if not installed)
 Download and install Arduino IDE from:
 🔗( https://www.arduino.cc/en/software)
 
-### **Step 2: Install ESP8266 Board in Arduino IDE
+### Step 2: Install ESP8266 Board in Arduino IDE
 1. Open Arduino IDE.
 2. Go to File → Preferences.
 3. In the Additional Board Manager URLs field, enter:
@@ -52,18 +52,18 @@ http://arduino.esp8266.com/stable/package_esp8266com_index.json
 5. Go to Tools → Board → Boards Manager.
 6. Search for ESP8266 and install the latest version.
    
-### **Step 3: Install Required Libraries
+### Step 3: Install Required Libraries
 Go to Sketch → Include Library → Manage Libraries, then install the following:
 1. MFRC522 [by GithubCommunity](https://github.com/miguelbalboa/rfid.git)
 2. SPI (built-in with Arduino IDE)
    
-### **Step 4: Select the Correct Board and Port
+### Step 4: Select the Correct Board and Port
 1. Connect your ESP8266 board via USB.
 2. Go to Tools → Board → Select your ESP8266 board (NodeMCU 1.0 or Wemos D1 R1).
 3. Set Upload Speed to 115200.
 4. Select the correct COM Port under Tools → Port.
 
-### **Step 5: Copy and Paste the Code
+### Step 5: Copy and Paste the Code
 1. Open Arduino IDE.
 2. Create a new sketch (File → New).
 3. Copy and paste the RFID code.
