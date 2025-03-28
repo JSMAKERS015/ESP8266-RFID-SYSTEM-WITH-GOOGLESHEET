@@ -214,6 +214,11 @@ delay(2000);  // ⏱ Wait for 2 seconds before next loop
 4. The data will then be read back and displayed on the Serial Monitor.
 
 
+
+
+
+
+
 # NEXT STEP..
 Next, we will integrate Google Sheets to store the scanned RFID data in a cloud-based spreadsheet. This allows real-time logging of card scans, making it useful for applications like attendance systems, access control, and inventory tracking.
 To achieve this, we will use Google Apps Script and a web-based interface to send data from the ESP8266 to Google Sheets via an HTTP request. The ESP8266 will send the UID and stored card data to a Google Apps Script endpoint, which will append the received information to a Google Sheet.
@@ -267,6 +272,14 @@ function stripQuotes(value) {
 
 5. Deploy as a Web App: Save and deploy the script to generate a unique URL (webhook) that ESP8266 will use to send data.
 6. Modify ESP8266 Code: We will update our ESP8266 code to send card details to the webhook URL whenever an RFID card is scanned.
+
+
+
+
+
+
+
+
 
    
 # **FINAL STEP**
