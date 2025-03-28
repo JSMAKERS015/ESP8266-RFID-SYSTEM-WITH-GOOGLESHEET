@@ -1,11 +1,11 @@
-### **ESP8266 RFID SYSTEM WITH GOOGLESHEET**
+# **ESP8266 RFID SYSTEM WITH GOOGLESHEET**
 
 ![SMART RFID ATTENDANCE SYSTEM_20250327_160748_0000](https://github.com/user-attachments/assets/b385da70-ffcd-4996-a271-0f8e9e001ec4)
 
 
 
 
-## **CONNECTIONS:**
+### **CONNECTIONS:**
 
 The connection of the ESP8266 to the display is relatively straightforward, and it is crucial to emphasize that the display operates on a 5V power supply. Make sure RFID cnnections shouls be correct...
 
@@ -26,6 +26,7 @@ This configuration creates the wiring shown in the following figure.
 ![CIRCUIT DIAGRAM](https://github.com/user-attachments/assets/7592d805-8a67-4d91-80bd-768e5a552107)
 
 To program the Esp8266, upload the "RAW_CODE.ino" file, which will handle drawing and communication with the computer. Use the Arduino IDE to compile and upload the code. Make sure the esp8266 is connected to the computer during this process.
+
 ![Screenshot 2025-03-28 143240](https://github.com/user-attachments/assets/072874c1-46fe-451d-809a-9b69ecf15e89)
 
 
