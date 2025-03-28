@@ -26,10 +26,6 @@ The connection of the ESP8266 to the display is relatively straightforward, and 
 
 ![CIRCUIT DIAGRAM](https://github.com/user-attachments/assets/7592d805-8a67-4d91-80bd-768e5a552107)
 
-To program the Esp8266, upload the "RAW_CODE.ino" file, which will handle drawing and communication with the computer. Use the Arduino IDE to compile and upload the code. Make sure the esp8266 is connected to the computer during this process.
-
-![Screenshot 2025-03-28 143240](https://github.com/user-attachments/assets/072874c1-46fe-451d-809a-9b69ecf15e89)
-
 
 
 ## **STEPS**
@@ -192,7 +188,7 @@ delay(2000);  // ⏱ Wait for 2 seconds before next loop
 2. Click the Upload (→) Button to upload the code.
 3.Wait for "Done Uploading" message.
 
-### **Step 7: Open Serial Monitor
+### Step 7: Open Serial Monitor
 1. Go to Tools → Serial Monitor.
 2. Set baud rate to 115200.
 3. You should see messages like:
@@ -207,7 +203,8 @@ delay(2000);  // ⏱ Wait for 2 seconds before next loop
 📄 Card Data: 13-JASPREET SINGH
 ```
 
-![Capture](https://github.com/user-attachments/assets/e40fda3a-55b3-4cd7-b585-2ca6a501a5bb)
+![Capture](https://github.com/user-attachments/assets/dd5184ef-8429-42b1-adb3-5859a8ebe814)
+
 
 
 ✅ Testing the System
@@ -217,11 +214,11 @@ delay(2000);  // ⏱ Wait for 2 seconds before next loop
 4. The data will then be read back and displayed on the Serial Monitor.
 
 
-# **NEXT STEP..
+# NEXT STEP..
 Next, we will integrate Google Sheets to store the scanned RFID data in a cloud-based spreadsheet. This allows real-time logging of card scans, making it useful for applications like attendance systems, access control, and inventory tracking.
 To achieve this, we will use Google Apps Script and a web-based interface to send data from the ESP8266 to Google Sheets via an HTTP request. The ESP8266 will send the UID and stored card data to a Google Apps Script endpoint, which will append the received information to a Google Sheet.
 
-### **Steps to Set Up Google Sheets Integration:**
+### Steps to Set Up Google Sheets Integration:
 1. Create a New Google Sheet: Open Google Sheets and create a new spreadsheet. Name it RFID Logs.
 2. Set Up Columns: In the first row, label the columns as Timestamp, Card UID, and Data to store scan details.
 3. Open Google Apps Script: Click Extensions > Apps Script and remove the default code.
@@ -276,7 +273,11 @@ function stripQuotes(value) {
 
 
 
-## ** MAIN CODE**
+To program the Esp8266, upload the "RAW_CODE.ino" file, which will handle drawing and communication with the computer. Use the Arduino IDE to compile and upload the code. Make sure the esp8266 is connected to the computer during this process.
+
+![Screenshot 2025-03-28 143240](https://github.com/user-attachments/assets/072874c1-46fe-451d-809a-9b69ecf15e89)
+
+## *MAIN CODE*
 
    
 ```
